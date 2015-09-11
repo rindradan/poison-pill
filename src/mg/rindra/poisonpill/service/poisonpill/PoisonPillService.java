@@ -1,4 +1,4 @@
-package mg.rindra.poisonpill.service;
+package mg.rindra.poisonpill.service.poisonpill;
 
 public interface PoisonPillService
 {

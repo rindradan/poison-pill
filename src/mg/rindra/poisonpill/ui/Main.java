@@ -1,13 +1,9 @@
 package mg.rindra.poisonpill.ui;
 
-import mg.rindra.poisonpill.model.Message;
-import mg.rindra.poisonpill.model.Worker;
-import mg.rindra.poisonpill.service.PoisonPillService;
-import mg.rindra.poisonpill.service.impl.PoisonPillServiceImpl;
-import org.omg.PortableServer.THREAD_POLICY_ID;
+import mg.rindra.poisonpill.service.poisonpill.PoisonPillService;
+import mg.rindra.poisonpill.service.poisonpill.impl.PoisonPillServiceImpl;
 
 import java.util.Scanner;
-import java.util.concurrent.*;
 
 public class Main
 {

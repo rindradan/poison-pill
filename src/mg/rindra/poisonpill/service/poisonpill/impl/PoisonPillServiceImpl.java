@@ -1,8 +1,8 @@
-package mg.rindra.poisonpill.service.impl;
+package mg.rindra.poisonpill.service.poisonpill.impl;
 
 import mg.rindra.poisonpill.model.Message;
 import mg.rindra.poisonpill.model.Worker;
-import mg.rindra.poisonpill.service.PoisonPillService;
+import mg.rindra.poisonpill.service.poisonpill.PoisonPillService;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
