@@ -1,9 +1,6 @@
 package mg.rindra.poisonpill.model;
 
-import mg.rindra.poisonpill.model.Message;
-
 import java.util.Observer;
-import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 
@@ -48,9 +45,9 @@ public class Worker implements Callable<Object>
             }
         }
 
-        int sleepTime = new Random().nextInt(2000);
-        System.out.println("Sleeping for " + sleepTime + "ms");
-        Thread.sleep(sleepTime);
+//        int sleepTime = new Random().nextInt(2000);
+//        System.out.println("Sleeping for " + sleepTime + "ms");
+//        Thread.sleep(sleepTime);
         listener.update(null, null);
         return null;
     }

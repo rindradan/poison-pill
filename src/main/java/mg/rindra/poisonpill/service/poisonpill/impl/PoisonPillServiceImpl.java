@@ -2,7 +2,6 @@ package mg.rindra.poisonpill.service.poisonpill.impl;
 
 import mg.rindra.poisonpill.model.Message;
 import mg.rindra.poisonpill.model.Worker;
-import mg.rindra.poisonpill.service.poisonpill.AsyncProcessor;
 import mg.rindra.poisonpill.service.poisonpill.PoisonPillService;
 
 import java.util.Observable;
@@ -14,8 +13,9 @@ public class PoisonPillServiceImpl implements PoisonPillService
     public final int THREAD_SIZE = 5;
 
     @Override
-    public void execute(int messageCount) throws InterruptedException {
-        final CountDownLatch latch = new CountDownLatch(1);
+    public void execute(int messageCount) throws InterruptedException
+    {
+        final CountDownLatch latch = new CountDownLatch(messageCount);
         BlockingQueue<Message> queue = new LinkedBlockingDeque<Message>(messageCount);
         ExecutorService executorService = Executors.newFixedThreadPool(THREAD_SIZE);
 
