@@ -9,8 +9,7 @@ public class Main
 {
     public static PoisonPillService poisonPillService;
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws InterruptedException {
         poisonPillService = new PoisonPillServiceImpl();
 
         Scanner keyboard = new Scanner(System.in);

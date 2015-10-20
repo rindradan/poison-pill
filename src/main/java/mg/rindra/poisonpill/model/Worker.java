@@ -2,21 +2,26 @@ package mg.rindra.poisonpill.model;
 
 import mg.rindra.poisonpill.model.Message;
 
+import java.util.Observer;
+import java.util.Random;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Callable;
 
-public class Worker implements Runnable
+public class Worker implements Callable<Object>
 {
     private int index = 0;
     private BlockingQueue<Message> queue;
+    private Observer listener;
 
-    public Worker(int index, BlockingQueue<Message> queue)
+    public Worker(int index, BlockingQueue<Message> queue, Observer listener)
     {
         this.index = index;
         this.queue = queue;
+        this.listener = listener;
     }
 
     @Override
-    public void run()
+    public Object call() throws Exception
     {
         boolean stop = false;
 
@@ -42,5 +47,11 @@ public class Worker implements Runnable
                 e.printStackTrace();
             }
         }
+
+        int sleepTime = new Random().nextInt(2000);
+        System.out.println("Sleeping for " + sleepTime + "ms");
+        Thread.sleep(sleepTime);
+        listener.update(null, null);
+        return null;
     }
 }

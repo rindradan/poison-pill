@@ -2,27 +2,33 @@ package mg.rindra.poisonpill.service.poisonpill.impl;
 
 import mg.rindra.poisonpill.model.Message;
 import mg.rindra.poisonpill.model.Worker;
+import mg.rindra.poisonpill.service.poisonpill.AsyncProcessor;
 import mg.rindra.poisonpill.service.poisonpill.PoisonPillService;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.concurrent.*;
 
 public class PoisonPillServiceImpl implements PoisonPillService
 {
     public final int THREAD_SIZE = 5;
 
     @Override
-    public void execute(int messageCount)
-    {
+    public void execute(int messageCount) throws InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
         BlockingQueue<Message> queue = new LinkedBlockingDeque<Message>(messageCount);
         ExecutorService executorService = Executors.newFixedThreadPool(THREAD_SIZE);
 
         for(int i=0 ; i< messageCount ; i++)
         {
             System.out.println("Submit worker " + (i + 1) + " into the thread pool");
-            executorService.submit(new Worker(i + 1, queue));
+            executorService.submit(new Worker(i + 1, queue, new Observer() {
+                @Override
+                public void update(Observable o, Object arg) {
+                    System.err.println("Counting down... " + (latch.getCount()));
+                    latch.countDown();
+                }
+            }));
         }
 
         try
@@ -44,6 +50,15 @@ public class PoisonPillServiceImpl implements PoisonPillService
         {
             e.printStackTrace();
         }
+
+        System.err.println("Submitted tasks. Time to wait..." + (latch.getCount()));
+        long time = System.currentTimeMillis();
+        latch.await(5000, TimeUnit.MILLISECONDS); // bail after a reasonable time
+        long totalTime = System.currentTimeMillis() - time;
+
+        System.err.println("I awaited for " + totalTime +
+                "ms. Did latch count down? " + (latch.getCount() == 0));
+
 
         executorService.shutdown();
     }
