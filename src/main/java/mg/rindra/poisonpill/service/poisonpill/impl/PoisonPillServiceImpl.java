@@ -51,7 +51,7 @@ public class PoisonPillServiceImpl implements PoisonPillService
             e.printStackTrace();
         }
 
-        System.err.println("Submitted tasks. Time to wait..." + (latch.getCount()));
+        System.err.println("Submitted tasks. Time to wait... " + (latch.getCount()) + " ms");
         long time = System.currentTimeMillis();
         latch.await(5000, TimeUnit.MILLISECONDS); // bail after a reasonable time
         long totalTime = System.currentTimeMillis() - time;
